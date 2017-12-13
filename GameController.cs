@@ -289,15 +289,17 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		score += rainbowPoints ^ rainbowPluses.Count;
+
 
 		foreach (Vector2 plus in rainbowPluses) {
 			MakeBlackPlus ((int)(plus.x), (int)(plus.y));
+			score += rainbowPoints ^ (rainbowPluses.Count + 1);
 		}
-		score += sameColorPoints ^ sameColorPluses.Count;
+
 
 		foreach (Vector2 plus in sameColorPluses) {
 			MakeBlackPlus ((int)(plus.x), (int)(plus.y));
+			score += sameColorPoints ^ (sameColorPluses.Count + 1);
 		}
 	}
 
