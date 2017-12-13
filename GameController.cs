@@ -60,6 +60,8 @@ public class GameController : MonoBehaviour {
 		}
 		//test this linenextCubenextCube
 		NewNextCube ();
+
+//		Score ();
 	}
 
 	//set for X position, check if it is occupied, change the color there
@@ -206,6 +208,10 @@ public class GameController : MonoBehaviour {
 	bool IsRainbowPlus (int x, int y) {
 		EdgeCheck (x, y);
 
+//		if ((x == 3 && y == 3)) {
+//			return true;
+//		}
+
 		Color a = gridCubes [x, y].GetComponent<Renderer> ().material.color;
 		Color b = gridCubes [x+1, y].GetComponent<Renderer> ().material.color;
 		Color c = gridCubes [x-1, y].GetComponent<Renderer> ().material.color;
@@ -238,6 +244,11 @@ public class GameController : MonoBehaviour {
 
 	bool IsSameColorPlus (int x, int y) {
 		EdgeCheck (x, y);
+
+//		if ((x == 1 && y == 3)) {
+//			Debug.Log ("got same color plus");
+//			return true;
+//		}
 
 		if (gridCubes [x, y].GetComponent<Renderer> ().material.color != Color.white &&
 			gridCubes [x, y].GetComponent<Renderer> ().material.color != Color.black &&
@@ -289,17 +300,26 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
+		if (sameColorPluses.Count == 1 && rainbowPluses.Count == 1) {
 
+			score += 110; 
+		
+		}
+
+		if (rainbowPluses.Count > 0) {
+			score += (int)Mathf.Pow (rainbowPoints, rainbowPluses.Count);
+		}
 
 		foreach (Vector2 plus in rainbowPluses) {
 			MakeBlackPlus ((int)(plus.x), (int)(plus.y));
-			score += rainbowPoints ^ (rainbowPluses.Count + 1);
 		}
 
+		if (sameColorPluses.Count > 0) {
+			score += (int)Mathf.Pow (sameColorPoints, sameColorPluses.Count);
+		}
 
 		foreach (Vector2 plus in sameColorPluses) {
 			MakeBlackPlus ((int)(plus.x), (int)(plus.y));
-			score += sameColorPoints ^ (sameColorPluses.Count + 1);
 		}
 	}
 
